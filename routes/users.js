@@ -1,15 +1,47 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/users");
 const passport = require("passport");
+const {
+  signup,
+  signin,
+  myprofile,
+  fetchUser,
+  updateProfile,
+} = require("../controllers/userControllers");
+const upload = require("../middleware/multer");
 
-//signup Router
-router.post("/signup", controller.signup);
-//signin Router
+router.param("userId", async (req, res, next, userId) => {
+  const foundUser = await fetchUser(userId, next);
+  if (foundUser) {
+    req.user = foundUser;
+    next();
+  } else {
+    next({
+      status: 404,
+      message: "User Not Found",
+    });
+  }
+});
+
+router.post("/signup", upload.single("picture"), signup);
+
 router.post(
   "/signin",
   passport.authenticate("local", { session: false }),
-  controller.signin
+  signin
+);
+
+router.get(
+  "/myprofile",
+  passport.authenticate("jwt", { session: false }),
+  myprofile
+);
+
+router.put(
+  "/updateprofile",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("picture"),
+  updateProfile
 );
 
 module.exports = router;
