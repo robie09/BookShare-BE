@@ -23,7 +23,7 @@ router.param("userId", async (req, res, next, userId) => {
   }
 });
 
-router.post("/signup", upload.single("picture"), signup);
+router.post("/signup", upload.single("image"), signup);
 
 router.post(
   "/signin",
@@ -40,7 +40,7 @@ router.get(
 router.put(
   "/updateprofile",
   passport.authenticate("jwt", { session: false }),
-  upload.single("picture"),
+  upload.single("image"),
   updateProfile
 );
 
