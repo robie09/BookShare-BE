@@ -4,7 +4,7 @@ const router = express.Router();
 const {
 	categoryList,
 	categoryCreate,
-	categoryDetail,
+	categoryOfBook,
 	fetchCategory,
 } = require('../controllers/categoryController');
 
@@ -23,7 +23,7 @@ router.param('categoryId', async (req, res, next, categoryId) => {
 
 router.get('/', categoryList);
 
-router.get('/:categoryId', categoryDetail);
+router.get('/:categoryId', categoryOfBook);
 
 router.post('/', upload.single('image'), categoryCreate);
 
