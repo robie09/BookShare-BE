@@ -8,6 +8,7 @@ const {
   fetchUser,
   updateProfile,
 } = require("../controllers/userControllers");
+
 const upload = require("../middleware/multer");
 
 router.param("userId", async (req, res, next, userId) => {
