@@ -7,7 +7,6 @@ const {
   myprofile,
   fetchUser,
   updateProfile,
-  bookCreate,
 } = require("../controllers/userControllers");
 
 const upload = require("../middleware/multer");
@@ -44,13 +43,6 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.single("image"),
   updateProfile
-);
-
-router.post(
-  "/books",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
-  bookCreate
 );
 
 module.exports = router;
