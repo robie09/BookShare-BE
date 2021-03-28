@@ -39,7 +39,7 @@ router.get(
 );
 
 router.put(
-  "/updateprofile",
+  "/myprofile",
   passport.authenticate("jwt", { session: false }),
   upload.single("image"),
   updateProfile
