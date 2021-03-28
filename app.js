@@ -1,24 +1,29 @@
-const db = require("./db/models");
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+
 const userRoutes = require("./routes/users");
 const categoryRoutes = require("./routes/categories");
 const bookRoutes = require("./routes/book");
 
+const db = require("./db/models");
+// Passport
 const passport = require("passport");
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Passport Setup
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.use("/user", userRoutes);
+//Routes
+app.use(userRoutes);
 app.use("/categories", categoryRoutes);
-app.use("/book", bookRoutes);
+app.use("/books", bookRoutes);
 
 app.use("/media", express.static(path.join(__dirname, "media")));
 
