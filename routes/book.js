@@ -1,10 +1,13 @@
 const express = require("express");
 const upload = require("../middleware/multer");
+const passport = require("passport");
+
 const router = express.Router();
 const {
   bookList,
   bookDetail,
   fetchBook,
+  bookCreate,
 } = require("../controllers/bookController");
 
 router.param("bookId", async (req, res, next, bookId) => {
@@ -23,5 +26,12 @@ router.param("bookId", async (req, res, next, bookId) => {
 router.get("/", bookList);
 
 router.get("/:bookId", bookDetail);
+
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  bookCreate
+);
 
 module.exports = router;
