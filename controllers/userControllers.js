@@ -1,4 +1,4 @@
-const { User } = require("../db/models");
+const { User, Book } = require("../db/models");
 const bcrypt = require("bcrypt");
 const upload = require("../middleware/multer");
 const jwt = require("jsonwebtoken");
@@ -72,5 +72,18 @@ exports.updateProfile = async (req, res) => {
     res.json(req.user);
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.bookCreate = async (req, res, next) => {
+  try {
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    }
+    req.body.userId = req.user.id;
+    const newBook = await Book.create(req.body);
+    res.status(201).json(newBook);
+  } catch (error) {
+    next(error);
   }
 };
