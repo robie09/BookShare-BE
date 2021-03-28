@@ -56,6 +56,7 @@ exports.signin = (req, res) => {
 exports.myprofile = async (req, res, next) => {
   try {
     const user = req.user;
+    //REVIEW: This can be cleaned up using the ... operator
     const payload = {
       userId: user.id,
       username: user.username,

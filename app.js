@@ -1,25 +1,35 @@
-const db = require("./db/models");
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const passport = require("passport");
+
+// DB
+const db = require("./db/models");
+
+// Routes
 const userRoutes = require("./routes/users");
 const categoryRoutes = require("./routes/categories");
 const bookRoutes = require("./routes/book");
 
-const passport = require("passport");
+// Passport
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
+// REVIEW: Organize imports
+// REVIEW: media folder should be added to gitignore
+
 const app = express();
+
 app.use(cors());
 app.use(express.json());
+
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
+// REVIEW: Inconsistincy
 app.use("/user", userRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/book", bookRoutes);
-
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 app.use((req, res, next) => {

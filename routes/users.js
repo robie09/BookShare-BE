@@ -38,6 +38,7 @@ router.get(
   myprofile
 );
 
+// REVIEW: WE NEVVVVERRRRR put a verb in the path
 router.put(
   "/updateprofile",
   passport.authenticate("jwt", { session: false }),

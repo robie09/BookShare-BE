@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       image: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true, //REVIEW: by default it's true, you dont need to add it
       },
     },
     { timestamps: false }
