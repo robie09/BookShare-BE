@@ -49,11 +49,11 @@ db.Book.belongsTo(db.Category, { foreignKey: 'categoryId', as: 'category' });
 db.User.hasMany(db.Book, { foreignKey: 'userId', as: 'mybooks' });
 db.Book.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
 
-db.User.hasMany(db.Request, { foreignKey: 'user1Id', as: 'myrequest1' });
-db.Request.belongsTo(db.User, { foreignKey: 'user1Id', as: 'user1' });
+db.User.hasMany(db.Request, { foreignKey: 'requstUserId', as: 'myrequest1' });
+db.Request.belongsTo(db.User, { foreignKey: 'requstUserId', as: 'user1' });
 
-db.User.hasMany(db.Request, { foreignKey: 'user2Id', as: 'myrequest2' });
-db.Request.belongsTo(db.User, { foreignKey: 'user2Id', as: 'user2' });
+db.User.hasMany(db.Request, { foreignKey: 'receivedUserId', as: 'myrequest2' });
+db.Request.belongsTo(db.User, { foreignKey: 'receivedUserId', as: 'user2' });
 
 db.Book.hasMany(db.Request, { foreignKey: 'bookId', as: 'requestbook' });
 db.Request.belongsTo(db.Book, { foreignKey: 'bookId', as: 'requestbook' });
