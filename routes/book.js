@@ -8,6 +8,7 @@ const {
   bookDetail,
   fetchBook,
   bookCreate,
+  bookSummery,
 } = require("../controllers/bookController");
 
 router.param("bookId", async (req, res, next, bookId) => {
@@ -26,6 +27,8 @@ router.param("bookId", async (req, res, next, bookId) => {
 router.get("/", bookList);
 
 router.get("/:bookId", bookDetail);
+
+router.get("/:bookId/summery", bookSummery);
 
 router.post(
   "/",
