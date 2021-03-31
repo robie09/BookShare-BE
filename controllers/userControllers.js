@@ -89,7 +89,7 @@ exports.viewProfile = async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const user = await User.findByPk(userId);
-    const payload = {
+    const data = {
       userId: user.id,
       username: user.username,
       firstName: user.firstName,
@@ -100,7 +100,7 @@ exports.viewProfile = async (req, res, next) => {
         where: { userId: user.id },
       }),
     };
-    res.status(201).json(payload);
+    res.status(201).json(data);
   } catch (error) {
     next(error);
   }
