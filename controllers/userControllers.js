@@ -87,7 +87,7 @@ exports.updateProfile = async (req, res) => {
 
 exports.viewProfile = async (req, res, next) => {
 	try {
-		const userId = req.body.userId;
+		const userId = req.params.userId;
 		const user = await User.findByPk(userId);
 		const payload = {
 			userId: user.id,
