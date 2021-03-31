@@ -4,7 +4,6 @@ const router = express.Router();
 const {
   categoryList,
   categoryCreate,
-  categoryOfBook,
   fetchCategory,
 } = require("../controllers/categoryController");
 
@@ -20,6 +19,7 @@ router.param("categoryId", async (req, res, next, categoryId) => {
     });
   }
 });
+
 
 router.get("/", categoryList);
 
