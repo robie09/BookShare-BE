@@ -52,14 +52,6 @@ exports.bookDetail = async (req, res, next) => {
 exports.bookCreate = async (req, res, next) => {
   try {
     if (req.file) {
-      console.log(
-        "🚀 ~ file: bookController.js ~ line 49 ~ exports.bookDetail= ~ userId",
-        userId
-      );
-      console.log(
-        "🚀 ~ file: bookController.js ~ line 49 ~ exports.bookDetail= ~ userId",
-        userId
-      );
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
     req.body.userId = req.user.id;
