@@ -47,7 +47,7 @@ router.put(
 );
 
 router.get(
-	'/viewProfile',
+	'/viewProfile/:userId',
 	passport.authenticate('jwt', { session: false }),
 	viewProfile
 );
