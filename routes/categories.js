@@ -20,10 +20,7 @@ router.param("categoryId", async (req, res, next, categoryId) => {
   }
 });
 
-
 router.get("/", categoryList);
-
-router.get("/:categoryId", categoryOfBook);
 
 router.post("/", upload.single("image"), categoryCreate);
 
