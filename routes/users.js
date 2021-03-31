@@ -8,6 +8,7 @@ const {
 	fetchUser,
 	updateProfile,
 	viewProfile,
+	userList,
 } = require('../controllers/userControllers');
 
 const upload = require('../middleware/multer');
@@ -50,6 +51,18 @@ router.get(
 	'/viewProfile/:userId',
 	passport.authenticate('jwt', { session: false }),
 	viewProfile
+);
+
+router.get(
+	'/viewProfile/:userId',
+	passport.authenticate('jwt', { session: false }),
+	viewProfile
+);
+
+router.get(
+	'/users',
+	passport.authenticate('jwt', { session: false }),
+	userList
 );
 
 module.exports = router;

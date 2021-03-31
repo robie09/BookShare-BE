@@ -105,3 +105,19 @@ exports.viewProfile = async (req, res, next) => {
 		next(error);
 	}
 };
+
+exports.userList = async (req, res, next) => {
+	try {
+		const _user = await User.findAll({
+			attributes: req.body,
+			include: {
+				model: Book,
+				as: 'mybooks',
+			},
+			attributes: { exclude: ['password'] },
+		});
+		res.json(_user);
+	} catch (error) {
+		next(error);
+	}
+};

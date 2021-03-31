@@ -9,7 +9,7 @@ const {
 	viewRequest,
 } = require('../controllers/requestController');
 router.post(
-	'/sendRequest/:user2Id',
+	'/sendRequest',
 	passport.authenticate('jwt', { session: false }),
 	sendRequest
 );

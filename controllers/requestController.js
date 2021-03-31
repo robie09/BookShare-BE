@@ -46,7 +46,7 @@ exports.viewRequest = async (req, res, next) => {
 exports.sendRequest = async (req, res, next) => {
 	try {
 		req.body.requstUserId = req.user.id;
-		req.body.receivedUserId = req.params.user2Id;
+		req.body.receivedUserId = req.body.receivedUserId;
 		req.body.status = this.PENDING;
 		req.body.bookId = req.body.bookId;
 
