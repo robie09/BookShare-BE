@@ -9,6 +9,33 @@ exports.fetchCategory = async (categoryId, next) => {
   }
 };
 
+exports.categoryList = async (req, res, next) => {
+  try {
+    const _categorys = await Category.findAll({
+      attributes: req.body,
+      include: {
+        model: Book,
+        as: "books",
+      },
+    });
+    res.json(_categorys);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.categoryOfBook = async (req, res, next) => {
+  try {
+    const categoryId = req.category.id;
+    const books = await Book.findAll({
+      where: { categoryId },
+    });
+    res.status(201).json(books);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.categoryCreate = async (req, res, next) => {
   try {
     if (req.file) {
