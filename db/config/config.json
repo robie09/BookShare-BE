@@ -2,6 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "0963",
+
     "database": "bookshare_db",
     "host": "127.0.0.1",
     "dialect": "postgres",

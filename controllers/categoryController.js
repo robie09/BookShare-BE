@@ -24,6 +24,7 @@ exports.categoryList = async (req, res, next) => {
   }
 };
 
+
 exports.categoryCreate = async (req, res, next) => {
   try {
     if (req.file) {

@@ -4,6 +4,22 @@ exports.PENDING = 0;
 exports.ACCEPTED = 1;
 exports.REJECTED = 2;
 
+
+exports.fetchRequestView = async (userId, next) => {
+	try {
+		let re = await Request.findAll({
+			where: {
+				receivedUserId: userId,
+			},
+		});
+
+		return re;
+	} catch (error) {
+		next(error);
+	}
+};
+
+
 exports.fetchRequest = async (receivedUserId, requstUserId, next) => {
   try {
     let re = await Request.findOne({
