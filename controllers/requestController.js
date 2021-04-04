@@ -38,10 +38,12 @@ exports.viewRequest = async (req, res, next) => {
 		const user = req.user;
 		const userId = user.id;
 		let request = await Request.findAll({
+			include: { model: Book, through: { attributes: [] } },
 			where: {
 				receivedUserId: userId,
 			},
 		});
+
 		res.json(request);
 	} catch (error) {
 		next(error);
