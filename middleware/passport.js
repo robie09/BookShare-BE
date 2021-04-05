@@ -1,8 +1,8 @@
+const bcrypt = require("bcrypt");
+const { fromAuthHeaderAsBearerToken } = require("passport-jwt").ExtractJwt;
 const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
 const { User } = require("../db/models");
-const bcrypt = require("bcrypt");
-const { fromAuthHeaderAsBearerToken } = require("passport-jwt").ExtractJwt;
 const { JWT_SECRET } = require("../config/keys");
 
 exports.localStrategy = new LocalStrategy(async (username, password, done) => {
@@ -29,14 +29,11 @@ exports.jwtStrategy = new JWTStrategy(
 
   async (jwtPayload, done) => {
     if (Date.now() > jwtPayload.exp) {
-      // if exprid
-
-      return done(null, false); // throw a 401
+      return done(null, false);
     } else {
       try {
         const user = await User.findByPk(jwtPayload.id);
         return done(null, user);
-        // will throw a 401 if user does not exist
       } catch (error) {
         return done(error);
       }

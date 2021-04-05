@@ -5,7 +5,7 @@ const {
   categoryList,
   categoryCreate,
   fetchCategory,
-} = require("../controllers/categoryController");
+} = require("../controllers/categoryControllers");
 
 router.param("categoryId", async (req, res, next, categoryId) => {
   const foundCategory = await fetchCategory(categoryId, next);
