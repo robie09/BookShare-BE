@@ -1,8 +1,8 @@
-const SequelizeSlugify = require('sequelize-slugify');
+const SequelizeSlugify = require("sequelize-slugify");
 
 module.exports = (sequelize, DataTypes) => {
 	const Book = sequelize.define(
-		'Book',
+		"Book",
 		{
 			name: {
 				type: DataTypes.STRING,
@@ -19,15 +19,19 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			type: {
+			author: {
 				type: DataTypes.STRING,
 				allowNull: false,
+			},
+			existing: {
+				type: DataTypes.BOOLEAN,
+				defaultValue: false,
 			},
 		},
 		{ timestamps: false }
 	);
 	SequelizeSlugify.slugifyModel(Book, {
-		source: ['name'],
+		source: ["name"],
 	});
 	return Book;
 };

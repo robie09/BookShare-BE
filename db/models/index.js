@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
+const fs = require("fs");
+const path = require("path");
+const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const env = process.env.NODE_ENV || "development";
+const config = require(__dirname + "/../config/config.json")[env];
 const db = {};
 
 let sequelize;
@@ -23,7 +23,7 @@ if (config.use_env_variable) {
 fs.readdirSync(__dirname)
 	.filter((file) => {
 		return (
-			file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+			file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
 		);
 	})
 	.forEach((file) => {
@@ -43,28 +43,33 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.Category.hasMany(db.Book, { foreignKey: 'categoryId', as: 'books' });
-db.Book.belongsTo(db.Category, { foreignKey: 'categoryId', as: 'category' });
+db.Category.hasMany(db.Book, { foreignKey: "categoryId", as: "books" });
+db.Book.belongsTo(db.Category, { foreignKey: "categoryId", as: "category" });
 
-db.User.hasMany(db.Book, { foreignKey: 'userId', as: 'mybooks' });
-db.Book.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
+//db.User.hasMany(db.Book, { foreignKey: 'userId', as: 'mybooks' });
+//db.Book.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
 
-db.User.hasMany(db.Request, { foreignKey: 'requstUserId', as: 'myrequest1' });
-db.Request.belongsTo(db.User, { foreignKey: 'requstUserId', as: 'user1' });
+//new
+db.User.hasMany(db.MyBook, { foreignKey: "userId", as: "mybooks" });
+db.MyBook.belongsTo(db.User, { foreignKey: "userId", as: "user" });
 
-db.User.hasMany(db.Request, { foreignKey: 'receivedUserId', as: 'myrequest2' });
-db.Request.belongsTo(db.User, { foreignKey: 'receivedUserId', as: 'user2' });
+//new
+db.Book.hasMany(db.MyBook, { foreignKey: "bookId", as: "mybooks" });
+db.MyBook.belongsTo(db.Book, { foreignKey: "bookId", as: "books" });
 
-db.Book.hasMany(db.Request, { foreignKey: 'bookId', as: 'requestbook' });
-db.Request.belongsTo(db.Book, { foreignKey: 'bookId', as: 'requestbook' });
+db.User.hasMany(db.Request, { foreignKey: "requstUserId", as: "myrequest1" });
+db.Request.belongsTo(db.User, { foreignKey: "requstUserId", as: "user1" });
 
-db.Book.belongsToMany(db.Request, {
-	through: 'BookRequest',
-	foreignKey: 'bookIds',
+db.User.hasMany(db.Request, { foreignKey: "receivedUserId", as: "myrequest2" });
+db.Request.belongsTo(db.User, { foreignKey: "receivedUserId", as: "user2" });
+
+db.MyBook.belongsToMany(db.Request, {
+	through: "BookRequest",
+	foreignKey: "mybookId",
 });
-db.Request.belongsToMany(db.Book, {
-	through: 'BookRequest',
-	foreignKey: 'requestId',
+db.Request.belongsToMany(db.MyBook, {
+	through: "BookRequest",
+	foreignKey: "requestId",
 });
 
 module.exports = db;
