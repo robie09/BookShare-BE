@@ -4,31 +4,29 @@ const passport = require("passport");
 
 const router = express.Router();
 const {
-  bookList,
-  fetchBook,
-  bookCreate,
+	bookListExisting,
+	fetchBook,
+	bookCreate,
+	bookShear,
 } = require("../controllers/bookControllers");
 
 router.param("bookId", async (req, res, next, bookId) => {
-  const foundBook = await fetchBook(bookId, next);
-  if (foundBook) {
-    req.book = foundBook;
-    next();
-  } else {
-    next({
-      status: 404,
-      message: "book not found",
-    });
-  }
+	const foundBook = await fetchBook(bookId, next);
+	if (foundBook) {
+		req.book = foundBook;
+		next();
+	} else {
+		next({
+			status: 404,
+			message: "book not found",
+		});
+	}
 });
 
-router.get("/", bookList);
+router.get("/", bookListExisting);
 
-router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
-  bookCreate
-);
+router.post("/", upload.single("image"), bookCreate);
+
+router.get("/bookshear", bookShear);
 
 module.exports = router;

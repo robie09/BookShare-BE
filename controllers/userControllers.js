@@ -1,8 +1,8 @@
-const { User, Book } = require('../db/models');
-const bcrypt = require('bcrypt');
-const upload = require('../middleware/multer');
-const jwt = require('jsonwebtoken');
-const { JWT_SECRET, JWT_EXPIRATION_MS } = require('../config/keys');
+const { User, Book, MyBook } = require("../db/models");
+const bcrypt = require("bcrypt");
+const upload = require("../middleware/multer");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../config/keys");
 
 exports.fetchUser = async (userId, next) => {
 	try {
@@ -18,7 +18,7 @@ exports.signup = async (req, res, next) => {
 	const saltRounds = 10;
 	try {
 		if (req.file) {
-			req.body.image = `http://${req.get('host')}/media/${req.file.filename}`;
+			req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
 		}
 		const hashedPassword = await bcrypt.hash(password, saltRounds);
 		req.body.password = hashedPassword;
@@ -63,7 +63,7 @@ exports.myprofile = async (req, res, next) => {
 			lastName: user.lastName,
 			email: user.email,
 			image: user.image,
-			mybook: await Book.findAll({
+			mybook: await MyBook.findAll({
 				where: { userId: user.id },
 			}),
 		};
@@ -76,7 +76,7 @@ exports.myprofile = async (req, res, next) => {
 exports.updateProfile = async (req, res) => {
 	try {
 		if (req.file) {
-			req.body.image = `http://${req.get('host')}/media/${req.file.filename}`;
+			req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
 		}
 		await req.user.update(req.body);
 		res.json(req.user);
@@ -96,27 +96,15 @@ exports.viewProfile = async (req, res, next) => {
 			lastName: user.lastName,
 			email: user.email,
 			image: user.image,
-			hasbook: await Book.findAll({
+			hasbook: await MyBook.findAll({
 				where: { userId: user.id },
+				include: {
+					model: Book,
+					as: "books",
+				},
 			}),
 		};
 		res.status(201).json(data);
-	} catch (error) {
-		next(error);
-	}
-};
-
-exports.userList = async (req, res, next) => {
-	try {
-		const _user = await User.findAll({
-			attributes: req.body,
-			include: {
-				model: Book,
-				as: 'mybooks',
-			},
-			attributes: { exclude: ['password'] },
-		});
-		res.json(_user);
 	} catch (error) {
 		next(error);
 	}
