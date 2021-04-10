@@ -41,13 +41,14 @@ exports.bookCreate = async (req, res, next) => {
 	}
 };
 
-exports.bookShear = async (req, res, next) => {
+exports.bookSearch = async (req, res, next) => {
 	try {
-		const name = req.body.name;
+		const name = req.params.name;
+
 		const book = await Book.findAll({
 			where: {
 				name: {
-					[Op.like]: `%${name}%`,
+					[Op.iLike]: `%${name}%`,
 				},
 			},
 		});

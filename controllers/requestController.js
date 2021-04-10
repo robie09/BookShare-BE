@@ -1,4 +1,4 @@
-const { Request, Book, MyBook } = require("../db/models");
+const { Request, Book, MyBook, BookRequest } = require("../db/models");
 
 exports.PENDING = 0;
 exports.ACCEPTED = 1;
@@ -73,6 +73,7 @@ exports.acceptRequest = async (req, res, next) => {
 					},
 				}
 			);
+
 			res.status(204).end();
 		}
 	} catch (error) {
