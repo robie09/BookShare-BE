@@ -7,7 +7,7 @@ const {
 	bookListExisting,
 	fetchBook,
 	bookCreate,
-	bookShear,
+	bookSearch,
 } = require("../controllers/bookControllers");
 
 router.param("bookId", async (req, res, next, bookId) => {
@@ -27,6 +27,6 @@ router.get("/", bookListExisting);
 
 router.post("/", upload.single("image"), bookCreate);
 
-router.get("/bookshear", bookShear);
+router.get("/booksearch/:name", bookSearch);
 
 module.exports = router;

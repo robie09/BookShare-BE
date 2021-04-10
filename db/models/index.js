@@ -46,7 +46,7 @@ db.Sequelize = Sequelize;
 db.Category.hasMany(db.Book, { foreignKey: "categoryId", as: "books" });
 db.Book.belongsTo(db.Category, { foreignKey: "categoryId", as: "category" });
 
-//db.User.hasMany(db.Book, { foreignKey: 'userId', as: 'mybooks' });
+//db.User.hasMany(db.Category, { foreignKey: 'userId', as: 'myCategories' });
 //db.Book.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
 
 //new
