@@ -1,4 +1,4 @@
-const { User, Book, MyBook } = require("../db/models");
+const { User, Book, MyBook, UserCategory } = require("../db/models");
 const bcrypt = require("bcrypt");
 const upload = require("../middleware/multer");
 const jwt = require("jsonwebtoken");
@@ -23,6 +23,12 @@ exports.signup = async (req, res, next) => {
 		const hashedPassword = await bcrypt.hash(password, saltRounds);
 		req.body.password = hashedPassword;
 		const newUser = await User.create(req.body);
+
+		const category = req.body.categories.map((item) => ({
+			categoryId: item,
+			userId: newUser.id,
+		}));
+		await UserCategory.bulkCreate(category);
 		const payload = {
 			id: newUser.id,
 			username: newUser.username,
@@ -66,6 +72,10 @@ exports.myprofile = async (req, res, next) => {
 			mybook: await MyBook.findAll({
 				where: { userId: user.id },
 			}),
+			myCategory: await UserCategory.findAll({
+				where: { userId: user.id },
+				attributes: ["categoryId"],
+			}),
 		};
 		res.status(201).json(data);
 	} catch (error) {
@@ -102,6 +112,10 @@ exports.viewProfile = async (req, res, next) => {
 					model: Book,
 					as: "books",
 				},
+			}),
+			hasCategory: await UserCategory.findAll({
+				where: { userId: user.id },
+				attributes: ["categoryId"],
 			}),
 		};
 		res.status(201).json(data);
