@@ -11,6 +11,10 @@ exports.fetchRequest = async (receivedUserId, requstUserId, next) => {
 				requstUserId,
 				receivedUserId,
 			},
+			include: {
+				model: MyBook,
+				through: { attributes: [] },
+			},
 		});
 
 		return re;
@@ -61,6 +65,10 @@ exports.acceptRequest = async (req, res, next) => {
 		const receivedUserId = req.user.id;
 		const requstUserId = req.params.user2Id;
 		const request = await this.fetchRequest(receivedUserId, requstUserId, next);
+		const books = request.MyBooks;
+		const bookRequst = books.filter((book) => book.userId == requstUserId);
+		const bookReceived = books.filter((book) => book.userId == receivedUserId);
+
 		if (request) {
 			await request.update(
 				{
@@ -73,19 +81,31 @@ exports.acceptRequest = async (req, res, next) => {
 					},
 				}
 			);
-
-			let re = await Request.findOne({
-				where: {
-					requstUserId,
-					receivedUserId,
-				},
-				include: {
-					model: MyBook,
-					through: { attributes: [] },
-				},
+			//console.log("bookRequst", bookRequst.toJSON());
+			await bookRequst.map(async (book) => {
+				await MyBook.update(
+					{ userId: receivedUserId },
+					{
+						where: {
+							id: book.id,
+							userId: requstUserId,
+						},
+					}
+				);
+			});
+			await bookReceived.map(async (book) => {
+				await MyBook.update(
+					{ userId: requstUserId },
+					{
+						where: {
+							id: book.id,
+							userId: receivedUserId,
+						},
+					}
+				);
 			});
 
-			res.status(200).json(re);
+			res.status(200).json(bookRequst);
 		}
 	} catch (error) {
 		next(error);
