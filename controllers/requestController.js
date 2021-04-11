@@ -74,7 +74,18 @@ exports.acceptRequest = async (req, res, next) => {
 				}
 			);
 
-			res.status(204).end();
+			let re = await Request.findOne({
+				where: {
+					requstUserId,
+					receivedUserId,
+				},
+				include: {
+					model: MyBook,
+					through: { attributes: [] },
+				},
+			});
+
+			res.status(200).json(re);
 		}
 	} catch (error) {
 		next(error);

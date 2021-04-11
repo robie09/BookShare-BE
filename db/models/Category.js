@@ -1,8 +1,8 @@
-const SequelizeSlugify = require('sequelize-slugify');
+const SequelizeSlugify = require("sequelize-slugify");
 
 module.exports = (sequelize, DataTypes) => {
 	const Category = sequelize.define(
-		'Category',
+		"Category",
 		{
 			name: {
 				type: DataTypes.STRING,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 		{ timestamps: false }
 	);
 	SequelizeSlugify.slugifyModel(Category, {
-		source: ['name'],
+		source: ["name"],
 	});
 	return Category;
 };
