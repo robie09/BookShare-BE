@@ -1,12 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-	const Request = sequelize.define(
-		'Request',
-		{
-			status: {
-				type: DataTypes.INTEGER,
-			},
+	const Request = sequelize.define("Request", {
+		status: {
+			type: DataTypes.INTEGER,
 		},
-		{ timestamps: false }
-	);
+		note: {
+			type: DataTypes.STRING,
+		},
+	});
 	return Request;
 };

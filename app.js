@@ -7,7 +7,7 @@ const categoryRoutes = require("./routes/categories");
 const myBookRoutes = require("./routes/myBooks");
 const bookRoutes = require("./routes/books");
 const requestRoutes = require("./routes/requests");
-
+const subCategoryRoutes = require("./routes/subCategories");
 const db = require("./db/models");
 
 // Passport
@@ -29,6 +29,7 @@ app.use("/categories", categoryRoutes);
 app.use("/books", bookRoutes);
 app.use("/requests", requestRoutes);
 app.use("/mybook", myBookRoutes);
+app.use("/subcategories", subCategoryRoutes);
 
 app.use("/media", express.static(path.join(__dirname, "media")));
 

@@ -71,11 +71,20 @@ db.Request.belongsTo(db.User, { foreignKey: "receivedUserId", as: "user2" });
 
 db.MyBook.belongsToMany(db.Request, {
 	through: "BookRequest",
-	foreignKey: "mybookId",
+	foreignKey: "mybooksId",
 });
 db.Request.belongsToMany(db.MyBook, {
 	through: "BookRequest",
 	foreignKey: "requestId",
+});
+
+db.SubCategory.hasMany(db.Category, {
+	foreignKey: "subCategoryId",
+	as: "category",
+});
+db.Category.belongsTo(db.SubCategory, {
+	foreignKey: "categoryId",
+	as: "subCategory",
 });
 
 module.exports = db;

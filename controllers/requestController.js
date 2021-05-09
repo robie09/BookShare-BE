@@ -49,6 +49,7 @@ exports.sendRequest = async (req, res, next) => {
 		req.body.requstUserId = req.user.id;
 		req.body.receivedUserId = req.body.receivedUserId;
 		req.body.status = this.PENDING;
+		req.body.note = req.body.note;
 
 		const newRequest = await Request.create(req.body);
 		newRequest.addMyBook(req.body.bookId);
